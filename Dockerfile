@@ -1,4 +1,4 @@
-# GGCOM - Docker - py3nlp v201508132002
+# GGCOM - Docker - py3nlp v201508150755
 # Louis T. Getterman IV (@LTGIV)
 # www.GotGetLLC.com | www.opensour.cc/ggcom/docker/py3nlp
 #
@@ -62,6 +62,9 @@ RUN			bash $HOME/src/ggcom-docker-pyenv/pycompiler.bash 2 python2
 RUN			bash $HOME/src/ggcom-docker-pyenv/pycompiler.bash 3 python3
 ################################################################################
 USER		root
+
+# Used by entry point
+RUN			cp -vaR $HOME/src/ggcom-docker-pyenv/init.bash /root/init.bash
 
 # Install Python module requirements
 RUN			apt-get -y install \
@@ -170,7 +173,6 @@ RUN			find / -type d -name .git -print0 | xargs -0 rm -rf
 # Return to home
 WORKDIR		$HOME
 ################################################################################
-ADD			init.bash /root/init.bash
 RUN			chmod 750 /root/init.bash
 ENTRYPOINT	[ "/bin/bash", "/root/init.bash" ]
 ################################################################################
